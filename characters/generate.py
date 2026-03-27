@@ -38,6 +38,19 @@ def renderChar(char, outputPath, font, width, height, fg, bg):
     draw.text((x, y), char, fill=fg, font=font)
     image.save(outputPath)
 
+def generateLightness(manifestMap, charList):
+    lightnessMap = {}
+
+    for charName in charList:
+        image = Image.open(manifestMap[charName]).convert("L")
+        pixels = image.getdata()
+        averageLightness = sum(pixels) / len(pixels)
+        lightnessMap[charName] = averageLightness
+
+    with open("lightness.json", "wt") as lightnessFile:
+        json.dump(lightnessMap, lightnessFile, indent=2)
+
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -50,8 +63,7 @@ def main():
 
     config = readConfig(arguments.config)
     charList = config.get("chars") or config.get("characters") or []
-    if not charList:
-        raise ValueError("No characters found in config under 'chars' or 'characters'.")
+
 
     scriptDir = os.path.dirname(os.path.abspath(__file__))
     defaultFontPath = os.path.join(scriptDir, "..", "fonts", "MonaspaceXenonFrozen-WideRegular.ttf")
@@ -71,6 +83,11 @@ def main():
 
     for char in charList:
         renderChar(char, manifestMap[char], font, width, height, fg, bg)
+    
+    generateLightness(manifestMap, charList)
+
+
+
 
 
 if __name__ == "__main__":
