@@ -1,3 +1,9 @@
 {
-    "imagePath" : "image.png"
+    "imagePath" : "image.png",
+    "sectionSideLength" : 1,
+    "characterManifestPath" : "characters/manifest.json",
+    "characterLightnessPath" : "characters/lightness.json",
+    "characterConfigPath" : "characters/config.json",
+    "outputScale" : 0.25,
+    "output" : "output.png"
 }

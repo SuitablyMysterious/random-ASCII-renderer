@@ -43,7 +43,7 @@ def generateLightness(manifestMap, charList):
 
     for charName in charList:
         image = Image.open(manifestMap[charName]).convert("L")
-        pixels = image.getdata()
+        pixels = image.get_flattened_data()
         averageLightness = sum(pixels) / len(pixels)
         lightnessMap[charName] = averageLightness
 
@@ -85,10 +85,6 @@ def main():
         renderChar(char, manifestMap[char], font, width, height, fg, bg)
     
     generateLightness(manifestMap, charList)
-
-
-
-
 
 if __name__ == "__main__":
     main()

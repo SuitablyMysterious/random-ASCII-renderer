@@ -2,3 +2,4 @@ fonts
 characters/manifest.json
 characters/*.png
 characters/lightness.json
+*.png
